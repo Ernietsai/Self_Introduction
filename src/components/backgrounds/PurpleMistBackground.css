@@ -1,0 +1,164 @@
+/* ==========================================================================
+   Purple Mist Background Styles
+   Ultra-lightweight, hardware-accelerated dynamic mist & smoke effect
+   ========================================================================== */
+
+.purple-mist-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 50% 30%,
+    #180b2e 0%,
+    #0e061c 50%,
+    var(--theme-smoke-bg, #07030e) 100%
+  );
+  transition: opacity 0.4s ease;
+}
+
+/* Base mist layer wrapper for parallax translation */
+.mist-layer {
+  position: absolute;
+  inset: -25vh -20vw;
+  width: 140vw;
+  height: 150vh;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Organic mist clouds with GPU rasterized blur */
+.mist-cloud {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  filter: blur(var(--mist-blur, 65px));
+  opacity: var(--mist-opacity, 0.65);
+  will-change: transform;
+}
+
+/* Cloud 1: Deep Violet Nebula (Upper Left) */
+.cloud-1 {
+  width: 70vw;
+  height: 65vh;
+  top: 0;
+  left: -15%;
+  background: radial-gradient(
+    circle,
+    var(--theme-smoke-primary, rgba(147, 51, 234, 0.7)) 0%,
+    rgba(107, 33, 168, 0.35) 45%,
+    rgba(76, 29, 149, 0.15) 65%,
+    transparent 80%
+  );
+  animation: mist-drift-1 26s ease-in-out infinite alternate;
+}
+
+/* Cloud 2: Neon Purple / Orchid (Center Right) */
+.cloud-2 {
+  width: 65vw;
+  height: 60vh;
+  top: 30%;
+  right: -10%;
+  background: radial-gradient(
+    circle,
+    var(--theme-smoke-secondary, rgba(192, 132, 252, 0.65)) 0%,
+    rgba(168, 85, 247, 0.35) 45%,
+    rgba(126, 34, 206, 0.15) 65%,
+    transparent 80%
+  );
+  animation: mist-drift-2 32s ease-in-out infinite alternate;
+}
+
+/* Cloud 3: Electric Indigo / Cosmic Dust (Bottom Left) */
+.cloud-3 {
+  width: 75vw;
+  height: 70vh;
+  bottom: -20%;
+  left: 5%;
+  background: radial-gradient(
+    circle,
+    var(--theme-smoke-indigo, rgba(126, 34, 206, 0.6)) 0%,
+    rgba(99, 102, 241, 0.3) 50%,
+    rgba(67, 56, 202, 0.1) 70%,
+    transparent 85%
+  );
+  animation: mist-drift-3 36s ease-in-out infinite alternate;
+}
+
+/* Cloud 4: Soft Lavender Wisps (Atmospheric Center Aura) */
+.cloud-4 {
+  width: 55vw;
+  height: 55vh;
+  top: 20%;
+  left: 25%;
+  background: radial-gradient(
+    circle,
+    var(--theme-smoke-lavender, rgba(216, 180, 254, 0.5)) 0%,
+    rgba(147, 51, 234, 0.25) 50%,
+    transparent 75%
+  );
+  animation: mist-pulse 18s ease-in-out infinite alternate;
+}
+
+/* Keyframe Animations for Natural Organic Drifting */
+@keyframes mist-drift-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(6vw, 5vh, 0) scale(1.12) rotate(12deg);
+  }
+  100% {
+    transform: translate3d(-4vw, 10vh, 0) scale(0.96) rotate(-8deg);
+  }
+}
+
+@keyframes mist-drift-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-8vw, -6vh, 0) scale(1.1) rotate(-14deg);
+  }
+  100% {
+    transform: translate3d(5vw, -3vh, 0) scale(1.18) rotate(15deg);
+  }
+}
+
+@keyframes mist-drift-3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(6vw, -8vh, 0) scale(1.08) rotate(10deg);
+  }
+  100% {
+    transform: translate3d(-7vw, 4vh, 0) scale(0.92) rotate(-12deg);
+  }
+}
+
+@keyframes mist-pulse {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.92);
+    opacity: calc(var(--mist-opacity, 0.65) * 0.75);
+  }
+  50% {
+    transform: translate3d(-3vw, 4vh, 0) scale(1.2);
+    opacity: calc(var(--mist-opacity, 0.65) * 1.15);
+  }
+  100% {
+    transform: translate3d(4vw, -2vh, 0) scale(0.98);
+    opacity: calc(var(--mist-opacity, 0.65) * 0.85);
+  }
+}
+
+/* Accessibility: Pause ambient motion if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mist-cloud {
+    animation: none !important;
+  }
+}
+

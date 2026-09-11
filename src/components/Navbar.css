@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Apple Liquid Glass Capsule Navbar Styles
+   ========================================================================== */
+
+/* Outer floating positioning container */
+.navbar-viewport-wrapper {
+  position: fixed;
+  top: 18px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none;
+  padding: 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.navbar-viewport-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* 標籤列膠囊 (Outer Glass Capsule) */
+.navbar-capsule {
+  --capsule-gap: 5px; /* 上、下、左、右四周完全一致的留白距離 */
+
+  pointer-events: auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 9999px; /* 膠囊形狀：左右半圓中填入長方形 */
+  background: var(--theme-nav-capsule-bg, rgba(255, 255, 255, 0.04));
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid var(--theme-nav-capsule-border, rgba(255, 255, 255, 0.12));
+  box-shadow: 
+    0 16px 36px -8px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 1.5px 0 rgba(0, 0, 0, 0.2);
+  padding: var(--capsule-gap); /* 四周均為 5px 留白 */
+  gap: 2px;
+  user-select: none;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* 內部滑動標籤膠囊 (Active Indicator Glass Pill) */
+.navbar-indicator-pill {
+  position: absolute;
+  left: 0; /* 基準點定於膠囊最左側 (0px)，使 translateX(activeEl.offsetLeft) 兩側留白皆嚴格等於 --capsule-gap */
+  top: var(--capsule-gap, 5px);
+  bottom: var(--capsule-gap, 5px);
+  border-radius: 9999px;
+  background: var(--theme-nav-indicator-bg, rgba(255, 255, 255, 0.09));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--theme-nav-indicator-border, rgba(255, 255, 255, 0.22));
+  box-shadow: 
+    0 4px 14px var(--theme-nav-indicator-glow, rgba(192, 132, 252, 0.18)),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  z-index: 1; /* 圖層位於標籤列膠囊之上，文字之下 */
+  pointer-events: none;
+  transform-origin: center center;
+  box-sizing: border-box;
+}
+
+/* 標籤按鈕 (Navigation Buttons) */
+.navbar-btn {
+  position: relative;
+  z-index: 2; /* 文字位於標籤膠囊之上 */
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  padding: 9px 16px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  color: var(--theme-nav-text-inactive, rgba(255, 255, 255, 0.55));
+  transition: color 0.22s ease;
+  border-radius: 9999px;
+}
+
+/* 文字在處於當前頁面或滑鼠懸停時為白色 */
+.navbar-btn.is-active,
+.navbar-btn.is-hovered {
+  color: var(--theme-nav-text-active, #ffffff);
+}
+
+.navbar-btn:focus-visible {
+  outline: 2px solid rgba(192, 132, 252, 0.6);
+  outline-offset: -2px;
+}
+
